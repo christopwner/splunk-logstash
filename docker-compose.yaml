@@ -1,0 +1,24 @@
+version: "3.6"
+services:
+  splunk:
+    image: splunk/splunk:latest
+    ports:
+      - 8000:8000
+      - 8088:8088
+      - 8089:8089
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
+      - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}
+      - DEBUG=true
+  logstash:
+    image: "logstash:7.9.3"
+    ports:
+      - 5000:5000
+    links:
+    - splunk
+    volumes:
+      - ./pipeline/:/usr/share/logstash/pipeline/:ro
+      - ./settings/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+    environment:
+      - "SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}"
