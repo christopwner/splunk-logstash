@@ -6,7 +6,7 @@ Run with:
 
 `# docker-compose up`
 
-Appended to `app.log` to test logging to splunk:
+Append to `app.log` to test logging to splunk:
 
 `tail -n1 app.log >> app.log`
 
