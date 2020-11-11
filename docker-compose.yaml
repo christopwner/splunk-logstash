@@ -10,15 +10,24 @@ services:
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
       - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}
+      - SPLUNK_HEC_SSL=False
       - DEBUG=true
   logstash:
-    image: "logstash:7.9.3"
+    image: "logstash:${ELASTIC_TAG}"
+    depends_on:
+      - splunk
     ports:
-      - 5000:5000
-    links:
-    - splunk
+      - 5044:5044
     volumes:
       - ./pipeline/:/usr/share/logstash/pipeline/:ro
       - ./settings/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
     environment:
       - "SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}"
+  filebeat:
+    image: "docker.elastic.co/beats/filebeat:${ELASTIC_TAG}"
+    user: root
+    depends_on:
+      - logstash
+    volumes:
+      - ./app.log:/var/log/app.log:ro
+      - ./settings/filebeat.yml:/usr/share/filebeat/filebeat.yml
