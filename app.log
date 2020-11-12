@@ -8,4 +8,3 @@
 { "date": "2020-11-10 02:57:26.8595", "level": "INFO", "message": "Controller 1 found 0 MessageHistory entries ready for processing." }
 { "date": "2020-11-10 02:57:26.8751", "level": "INFO", "message": "Controller 1 will attempt to mark 1000 records." }
 { "date": "2020-11-10 02:57:26.9845", "level": "INFO", "message": "Shutting down API Controller Phase 2 - Type: Hierarchy - Instance: 1." }
-
