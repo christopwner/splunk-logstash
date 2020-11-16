@@ -1,0 +1,9 @@
+metricbeat.modules:
+- module: system
+  metricsets:
+    - cpu
+    - memory
+    - process
+    - uptime
+output.logstash:
+  hosts: ["logstash:5044"]

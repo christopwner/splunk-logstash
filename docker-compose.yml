@@ -31,3 +31,9 @@ services:
     volumes:
       - ./app.log:/var/log/app.log:ro
       - ./settings/filebeat.yml:/usr/share/filebeat/filebeat.yml
+  metricbeat:
+    image: "docker.elastic.co/beats/metricbeat:${ELASTIC_TAG}"
+    depends_on:
+      - logstash
+    volumes:
+      - ./settings/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
