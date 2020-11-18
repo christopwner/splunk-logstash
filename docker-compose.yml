@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3"
 services:
   splunk:
     image: splunk/splunk:latest
@@ -14,10 +14,10 @@ services:
       - DEBUG=true
   logstash:
     image: "logstash:${ELASTIC_TAG}"
-    depends_on:
-      - splunk
     ports:
       - 5044:5044
+      - 5045:5045
+      - 9600:9600
     volumes:
       - ./pipeline/:/usr/share/logstash/pipeline/:ro
       - ./settings/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
